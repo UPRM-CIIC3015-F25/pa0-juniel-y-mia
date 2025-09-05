@@ -1,11 +1,11 @@
 import pygame, sys, random
-
+pygame.mixer.init()
+sound_effect = pygame.mixer.Sound('boing.mp3')
 def ball_movement():
     """
     Handles the movement of the ball and collision detection with the player and screen boundaries.
     """
     global ball_speed_x, ball_speed_y, score, start
-
     # Move the ball
     ball.x += ball_speed_x
     ball.y += ball_speed_y
@@ -24,6 +24,8 @@ def ball_movement():
             # TODO Task 2: Fix score to increase by 1
             score = score + 1  # Increase player score
             ball_speed_y *= -1  # Reverse ball's vertical direction
+            sound_effect.play()
+
             # TODO Task 6: Add sound effects HERE
 
     # Ball collision with top boundary
