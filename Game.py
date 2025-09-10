@@ -5,7 +5,7 @@ def ball_movement():
     """
     Handles the movement of the ball and collision detection with the player and screen boundaries.
     """
-    global ball_speed_x, ball_speed_y, score, start
+    global ball_speed_x, ball_speed_y, score, start, high_score
     # Move the ball
     ball.x += ball_speed_x
     ball.y += ball_speed_y
@@ -23,6 +23,7 @@ def ball_movement():
         if abs(ball.bottom - player.top) < 10:  # Check if ball hits the top of the paddle
             # TODO Task 2: Fix score to increase by 1
             score = score + 1  # Increase player score
+            if score > high_score: high_score = score
             ball_speed_y *= -1  # Reverse ball's vertical direction
             sound_effect.play()
 
@@ -56,7 +57,7 @@ def restart():
     """
     Resets the ball and player scores to the initial state.
     """
-    global ball_speed_x, ball_speed_y, score
+    global ball_speed_x, ball_speed_y, score, high_score
     ball.center = (screen_width / 2, screen_height / 2)  # Reset ball position to center
     ball_speed_y, ball_speed_x = 0, 0  # Stop ball movement
     score = 0  # Reset player score
@@ -89,8 +90,9 @@ player_speed = 0
 
 # Score Text setup
 score = 0
+high_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)  # Font for displaying score
-
+high_score_font = pygame.font.Font('freesansbold.ttf', 20) #Font for displaying high score
 start = False  # Indicates if the game has started
 
 # Main game loop
@@ -128,7 +130,8 @@ while True:
     pygame.draw.ellipse(screen, blue_color, ball)  # Draw ball
     player_text = basic_font.render(f'{score}', False, blue_color)  # Render player score
     screen.blit(player_text, (screen_width/2 - 15, 10))  # Display score on screen
-
+    high_score_text = high_score_font.render(f'High Score: {high_score}', False, red)  # Display high score
+    screen.blit(high_score_text, (screen_width / 3 - 150, 10))
     # Update display
     pygame.display.flip()
     clock.tick(60)  # Maintain 60 frames per second
