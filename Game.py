@@ -1,6 +1,9 @@
 import pygame, sys, random
+from pygame.examples.video import img
+
 pygame.mixer.init()
 sound_effect = pygame.mixer.Sound('boing.mp3')
+lose_sound = pygame.mixer.Sound("bummer.mp3")
 def ball_movement():
     """
     Handles the movement of the ball and collision detection with the player and screen boundaries.
@@ -39,6 +42,10 @@ def ball_movement():
 
     # Ball goes below the bottom boundary (missed by player)
     if ball.bottom > screen_height:
+        lose_sound.play()
+        screen.blit(sad_image, (0, 0))  # Show the "sad.jpg" image
+        pygame.display.flip()
+        pygame.time.wait(2000)  # Pause 2 seconds
         restart()  # Reset the game
 
 def player_movement():
@@ -72,6 +79,10 @@ screen_width = 500  # Screen width (can be adjusted)
 screen_height = 500  # Screen height (can be adjusted)
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Pong')  # Set window title
+# Load "lose" image
+sad_image = pygame.image.load("sad.jpg")                  # Load the image
+sad_image = pygame.transform.scale(sad_image, (screen_width, screen_height))  # Resize to fit screen
+
 
 # Colors
 bg_color = pygame.Color('grey12')
