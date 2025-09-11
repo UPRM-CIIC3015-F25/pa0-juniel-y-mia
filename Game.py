@@ -1,5 +1,5 @@
 import pygame, sys, random
-from pygame.examples.video import img
+
 
 pygame.mixer.init()
 sound_effect = pygame.mixer.Sound('boing.mp3')
